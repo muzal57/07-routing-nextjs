@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import NoteList from "@/components/NoteList/NoteList";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import SearchBox from "@/components/SearchBox/SearchBox"; // Changed from SearchForm
+import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
 import Pagination from "@/components/Pagination/Pagination";
-import css from "./Notes.module.css";
-import { NotesResponse } from "@/lib/api"; // Import NotesResponse from lib/api
+import css from "@/app/notes/Notes.module.css";
+import { NotesResponse } from "@/lib/api";
 
 interface NotesClientProps {
   tag?: string;
@@ -54,45 +54,42 @@ const NotesClient = ({ tag }: NotesClientProps) => {
     setCurrentPage(page);
   }, []);
 
-  const openModal = useCallback(() => setIsModalOpen(true), []);
-  const closeModal = useCallback(() => setIsModalOpen(false), []);
+  const handleModalOpen = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
 
-  const notes = data?.notes || [];
-  const totalPages = data?.totalPages || 1;
-
-  if (isLoading && !data) {
-    return <p>Loading notes...</p>;
-  }
+  const handleModalClose = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   if (isError) {
-    return <p>Error loading notes: {error.message}</p>;
+    return <div className={css.error}>Error: {error?.message}</div>;
   }
 
   return (
     <div className={css.container}>
-      <h1 className={css.title}>My Notes</h1>
-      <div className={css.toolbar}>
-        <SearchBox onSearch={handleSearch} />
-        <button onClick={openModal} className={css.button}>
-          Create New Note
+      <div className={css.header}>
+        <h1>Notes {tag ? `filtered by ${tag}` : ""}</h1>
+        <button onClick={handleModalOpen} className={css.addButton}>
+          Add Note
         </button>
       </div>
-      {notes.length > 0 ? (
+      <SearchBox onSearch={handleSearch} />
+      {isLoading ? (
+        <div className={css.loading}>Loading notes...</div>
+      ) : (
         <>
-          <NoteList notes={notes} />
+          <NoteList notes={data?.notes || []} />
           <Pagination
             currentPage={currentPage}
-            totalPages={totalPages}
+            totalPages={data?.totalPages || 1}
             onPageChange={handlePageChange}
           />
         </>
-      ) : (
-        <p>No notes found.</p>
       )}
-
       {isModalOpen && (
-        <Modal title="Create New Note" onClose={closeModal}>
-          <NoteForm onCancel={closeModal} />
+        <Modal title="Add New Note" onClose={handleModalClose}>
+          <NoteForm onCancel={handleModalClose} />
         </Modal>
       )}
     </div>
