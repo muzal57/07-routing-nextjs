@@ -1,7 +1,7 @@
 import Link from "next/link";
 import css from "../filter.module.css";
 
-const tags = ["Work", "Personal", "Important", "Archive"];
+const tags = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
 export default function SidebarNotes() {
   return (
