@@ -31,7 +31,14 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <TanStackProvider>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            {((children as any)?.children ?? children) as React.ReactNode}
+            {
+              ((children as any)["@modal"] ??
+                (children as any)?.modal ??
+                null) as React.ReactNode
+            }
+          </main>
           <Footer />
         </TanStackProvider>
       </body>

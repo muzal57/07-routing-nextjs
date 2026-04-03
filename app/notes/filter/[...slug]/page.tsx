@@ -8,13 +8,13 @@ import NotesClient from "@/app/notes/Notes.client";
 
 interface FilteredNotesPageProps {
   params: {
-    tag?: string[];
+    slug?: string[];
   };
 }
 
 const FilteredNotesPage = async ({ params }: FilteredNotesPageProps) => {
-  const tagParam = params.tag?.[0] || "all";
-  const filterTag = tagParam === "all" ? undefined : tagParam;
+  const slugParam = params.slug?.[0] || "all";
+  const filterTag = slugParam === "all" ? undefined : slugParam;
 
   const queryClient = new QueryClient();
 
