@@ -11,7 +11,7 @@ const NotesPage = async () => {
 
   // Попередньо завантажуємо список нотаток (початковий стан: порожній пошук, 1-ша сторінка)
   await queryClient.prefetchQuery({
-    queryKey: ["notes", "", 1],
+    queryKey: ["notes", "", 1, "all"],
     queryFn: () => fetchNotes("", 1, 10),
   });
 

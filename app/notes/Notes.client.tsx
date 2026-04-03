@@ -11,7 +11,11 @@ import Pagination from "@/components/Pagination/Pagination";
 import css from "./Notes.module.css";
 import { NotesResponse } from "@/lib/api"; // Import NotesResponse from lib/api
 
-const NotesClient = () => {
+interface NotesClientProps {
+  tag?: string;
+}
+
+const NotesClient = ({ tag }: NotesClientProps) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -37,8 +41,8 @@ const NotesClient = () => {
   }, [searchQuery]);
 
   const { data, isLoading, isError, error } = useQuery<NotesResponse, Error>({
-    queryKey: ["notes", debouncedSearchQuery, currentPage],
-    queryFn: () => fetchNotes(debouncedSearchQuery, currentPage, 10), // Assuming 10 items per page
+    queryKey: ["notes", debouncedSearchQuery, currentPage, tag ?? "all"],
+    queryFn: () => fetchNotes(debouncedSearchQuery, currentPage, 10, tag),
     placeholderData: (previousData) => previousData, // For smooth pagination
   });
 

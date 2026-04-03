@@ -4,16 +4,17 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
-import NoteDetailsClient from "./NoteDetails.client";
+import NotesClient from "../Notes.client";
+import NotePreview from "./NotePreview.client";
 
 interface NoteDetailsPageProps {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 }
 
 const NoteDetailsPage = async ({ params }: NoteDetailsPageProps) => {
-  const { id } = await params;
+  const { id } = params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
@@ -23,7 +24,10 @@ const NoteDetailsPage = async ({ params }: NoteDetailsPageProps) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient />
+      <div>
+        <NotesClient />
+        <NotePreview />
+      </div>
     </HydrationBoundary>
   );
 };

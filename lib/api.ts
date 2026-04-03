@@ -25,9 +25,20 @@ export const fetchNotes = async (
   query?: string,
   page: number = 1,
   limit: number = 10,
+  tag?: string,
 ): Promise<NotesResponse> => {
+  const params: Record<string, string | number | undefined> = {
+    search: query,
+    page,
+    perPage: limit,
+  };
+
+  if (tag && tag !== "all") {
+    params.tag = tag;
+  }
+
   const response = await axiosInstance.get<NotesResponse>("/notes", {
-    params: { search: query, page: page, perPage: limit },
+    params,
   });
   return response.data;
 };
