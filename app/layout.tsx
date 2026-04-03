@@ -23,8 +23,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
@@ -32,12 +34,8 @@ export default function RootLayout({
         <TanStackProvider>
           <Header />
           <main className="flex-1">
-            {((children as any)?.children ?? children) as React.ReactNode}
-            {
-              ((children as any)["@modal"] ??
-                (children as any)?.modal ??
-                null) as React.ReactNode
-            }
+            {children}
+            {modal}
           </main>
           <Footer />
         </TanStackProvider>
