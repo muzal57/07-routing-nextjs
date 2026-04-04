@@ -10,11 +10,6 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-// const geistMono = Geist_Mono({ // Not used, can be removed
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
 export const metadata: Metadata = {
   title: "NoteHub App",
   description:
