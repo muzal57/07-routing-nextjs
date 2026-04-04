@@ -6,7 +6,7 @@ export interface NotesResponse {
   totalPages: number;
 }
 
-const API_BASE_URL = "https://notehub-public.goit.study/api"; // ПЕРЕВІРТЕ ВАШ URL
+const API_BASE_URL = "https://notehub-public.goit.study/api"; 
 const notehubToken = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
 if (!notehubToken) {

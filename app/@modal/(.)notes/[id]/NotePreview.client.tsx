@@ -6,7 +6,7 @@ import { fetchNoteById } from "@/lib/api";
 import Modal from "@/components/Modal/Modal";
 import css from "@/app/notes/[id]/NoteDetails.module.css";
 
-const NotePreview: React.FC<{}> = () => {
+const NotePreview: React.FC = () => {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
